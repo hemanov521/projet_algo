@@ -3,10 +3,10 @@
 #include <stdio.h>
 
 
-void saisirmessage()
+
+MESSAGE saisirmessage()
 {
-  MESSAGE monmessage;
-  
+MESSAGE monmessage;
 while(1)
 {
 
@@ -34,8 +34,9 @@ while(1)
     fgets(monmessage.MSG, sizeof(monmessage.MSG), stdin);
     fprintf(fptr, "%s\n", monmessage.MSG);
     fclose(fptr);
-    
-  return 0;
+
+  return monmessage;
+
 
 }
 }
