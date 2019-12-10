@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 
-int main()
+void saisirmessage()
 {
   MESSAGE monmessage;
   
@@ -29,13 +29,12 @@ while(1)
     fgets(monmessage.OBJ, sizeof(monmessage.OBJ), stdin);
     fprintf(fptr, "%s\n", monmessage.OBJ);
 
-
     printf("Message : ");
     fscanf (stdin, "%s", monmessage.MSG);
     fgets(monmessage.MSG, sizeof(monmessage.MSG), stdin);
     fprintf(fptr, "%s\n", monmessage.MSG);
     fclose(fptr);
-
+    
   return 0;
 
 }
