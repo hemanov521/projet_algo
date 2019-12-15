@@ -29,12 +29,12 @@ typedef struct
     char *MSG[255]; //Texte du message
 }MESSAGE;
 
-int SaisieMotCle(REPONSE *Reponses, char *Fichier); //Fonction permettant la saisie des Mots Clés et des réponses associées
+int SaisieMotCle(REPONSE *Reponses, FILE *Fichier); //Fonction permettant la saisie des Mots Clés et des réponses associées
 int AfficherMotCle(REPONSE *Reponses); //Fonction permettant l'affichage des Mots Clés et des réponses associées
-int SauverMotCle(REPONSE *Reponses, char *Fichier);//Fonction permettant la sauvegarde dans un fichier des Mots clés et des réponses
-int SupprimerMotCle(REPONSE *Reponse, char *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
-int ChargerMotCle(REPONSE *Reponse, char *Fichier);//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
-int RechercheMotCle(REPONSE *MotCleCherche, char *Fichier);//Fonction permettant la recherche de Mots clés et de la réponse assocée
+int SauverMotCle(REPONSE *Reponses, FILE *Fichier);//Fonction permettant la sauvegarde dans un fichier des Mots clés et des réponses
+int SupprimerMotCle(REPONSE *Reponse, FILE *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
+int ChargerMotCle(REPONSE *Reponse, FILE *Fichier);//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
+int RechercheMotCle(REPONSE *MotCleCherche, FILE *Fichier);//Fonction permettant la recherche de Mots clés et de la réponse assocée
 
 int SaisieMessage(MESSAGE *MessageRecu);
 int GenererReponse(MESSAGE *MessageRecu, MESSAGE *MessageReponse);

@@ -28,17 +28,22 @@ int main(void)
 {
     //COORDONNEES *test[1];
     int choix, choix2; // déclarations des variables de choix du menu
-    REPONSE testrep[1];
-    REPONSE Recup[255];
-    COORDONNEES *UnePersonne;
+    REPONSE reponse[1];
+    //REPONSE Recup[255];
+    //COORDONNEES *UnePersonne;
+    FILE *Repertoire, *Reponses;
+    Repertoire = fopen("Repertoire.dat", "a");
+    Reponses = fopen("Reponses.dat", "a");
+    //strcpy(UnePersonne->Nom,"");
+    //strcpy(UnePersonne->Prenom,"");
+    //strcpy(UnePersonne->Email,"");
+    //UnePersonne->Importance=0;
     
-    char server[]="192.168.43.145"; // déclaration de l'URL du serveur
+    //char server[]="192.168.43.145"; // déclaration de l'URL du serveur
     //char *server="192.168.0.38";
-    int debug = 1;
+    //int debug = 1;
     //printf("%ld\n",sizeof(test));
     printf("Bienvenue !\n\n");
-
-
         printf("1 - Mode Utilisateur\n2 - Mode Administrateur\n0 - Sortie\n\nChoix : ");
         scanf("%d", &choix);
         //printf("vous avez choisi '%c'\n",choix);
@@ -51,14 +56,15 @@ int main(void)
             case 2: //Administrateur
                 printf("\t1 - Saisir Coordonnes\n\t2 - Lister Coordonnees\n\t3 - Rechercher coordonnes\n\t4 - Supprimer coordonnee\n\n\t5 - Saisir Mot Cle / reponse\n\t6 - Lister Mot cle / Reponse\n\t7 - Rechercher Mot Cle / Reponse\n\t8 - Supprimer Mot Cle / Reponse\n\t0 - Sortie\n\nChoix : ");
                 scanf("%d", &choix2);
-                printf("vous avez choisi '%d'\n",choix2);
+                printf("vous avez choisi '%d' : ",choix2);
                 switch(choix2)
                 {
                     case 1: //Saisie Coord
-                        //do
+                        printf("Saisie Coordonnes\n");
+                        SaisieCoordonnees(Repertoire);
                         break;
                     case 2: //Lister Coord
-                        //do
+                        ListerCoordonnees(Repertoire);
                         break;
                     case 3: //Rechercher Coord
                         //do
@@ -67,7 +73,7 @@ int main(void)
                         //do
                         break;
                     case 5: //Saisie MotCle
-                        //do
+                        SaisieMotCle(reponse, Reponses);
                         break;
                     case 6: //Lister MotCle
                         //do
@@ -92,8 +98,7 @@ int main(void)
                 */
         };
 
-    //SaisieCoordonnees(test, "Rep.dat");
-    //ListerCoordonnees("Repertoire.dat");
+    
     //AfficherCoordonnees(test);
     //SauverCoordonnees(test, "repertoire.txt");
     //ChargerCoordonnees("repertoire.txt");
@@ -101,7 +106,7 @@ int main(void)
     //scanf("%s", &test[0]->Nom);
     //printf("\n'%s' ",test[0]->Nom);
 
-    //SaisieMotCle(testrep, "Reponses.dat");
+    //
     //ChargerMotCle(Recup, "Reponses.dat");
     //printf("Chargement termine");
     /*while (1)
@@ -115,5 +120,7 @@ int main(void)
     SendCommand(server,"/RELAY4=ON",5000, debug);
     SendCommand(server,"/RELAY4=OFF",5000, debug);
     }*/
+    fclose(Repertoire);
+    fclose(Reponses);
     return 1;
 }

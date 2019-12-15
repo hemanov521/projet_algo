@@ -3,7 +3,7 @@
 ***************************/
 #include "FoncReponse.h"
 
-int SaisieMotCle(REPONSE *Reponses, char *Fichier) //Fonction permettant la saisie des Mots Clés et des réponses associées
+int SaisieMotCle(REPONSE *Reponses, FILE *Fichier) //Fonction permettant la saisie des Mots Clés et des réponses associées
 {
     int MotCle,fin;
     char MotCle1[26];//, Reponse1[255];
@@ -37,41 +37,48 @@ int SaisieMotCle(REPONSE *Reponses, char *Fichier) //Fonction permettant la sais
 }
 
 
-int SauverMotCle(REPONSE *Reponses, char *Fichier)//Fonction permettant la sauvegarde dans un fichier des Mots clés et des réponses
+int SauverMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la sauvegarde dans un fichier des Mots clés et des réponses
 {
-    FILE *sauvegarde;
+    //FILE *sauvegarde;
     //char ListeMots[32*26]="";
     int i;
-    sauvegarde = fopen(Fichier, "a");
- 	if (sauvegarde == NULL) 
+    //sauvegarde = fopen(Fichier, "a");
+ 	if (Fichier == NULL) 
 	{ 
-		printf("\nErreur d'ouverture du fichier : %s !\n", Fichier); 
+		printf("\nErreur d'acces au fichier !\n"); 
 		exit (1); 
 	}
     /*char MotCle[32][26]; //32 mots clés de 26 caractères max
     char Action[255]; // jusqu'a 256 caractères
     char Reponse[255]; // jusqu'a 256 caractères*/
-    fseek(sauvegarde,0,SEEK_END);
+    /*fseek(Fichier,0,SEEK_END);
     for (i=0; i<32; i++)
     {
-        fprintf(sauvegarde," %s;", Reponses->MotCle[i]);
+        fprintf(Fichier," %s;", Reponses->MotCle[i]);
     }
-    fprintf(sauvegarde,"%s;",Reponses->Action);
-    fprintf(sauvegarde,"%s\n",Reponses->Reponse);
-    fclose(sauvegarde);
+    fprintf(Fichier,"%s;",Reponses->Action);
+    fprintf(Fichier,"%s\n",Reponses->Reponse);
+    */
+
+    if(fwrite(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
+		printf("Donnees sauvegardees !\n"); 
+	else
+        printf("\nERREUR : Donnees non sauvegardees !\n"); 
+
+    //fclose(sauvegarde);
     return 0;
 }
-int ChargerMotCle(REPONSE *Reponses, char *Fichier)//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
+int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
 {
-    printf("Chargement du fichier : %s\n", Fichier);
-    FILE *sauvegarde;
-    char *buffer, *token;
+    //printf("Chargement du fichier \n");
+    //FILE *sauvegarde;
+    //char *buffer, *token;
     //char ListeMots[32*26]="";
-    int i,j;
-    sauvegarde = fopen(Fichier, "r"); /// ouverture pour lecture
- 	if (sauvegarde == NULL) 
+    //int i,j;
+    //sauvegarde = fopen(Fichier, "r"); /// ouverture pour lecture
+ 	if (Fichier == NULL) 
 	{ 
-		printf("\nErreur d'ouverture du fichier : %s !\n", Fichier); 
+		printf("\nErreur d'acces au fichier !\n"); 
 		exit (1); 
 	}
     else {printf("\nFichier ouvert\n");}
@@ -79,9 +86,14 @@ int ChargerMotCle(REPONSE *Reponses, char *Fichier)//Fonction permettant la réc
     /*char MotCle[32][26]; //32 mots clés de 26 caractères max
     char Action[255]; // jusqu'a 256 caractères
     char Reponse[255]; // jusqu'a 256 caractères*/
-    fseek(sauvegarde,0,SEEK_SET); // Curseur au début du fichier
+    //fseek(sauvegarde,0,SEEK_SET); // Curseur au début du fichier
     //printf("Curseur set");
-    j=0;
+    if(fread(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
+		printf("Donnees recuperees !\n"); 
+	else
+        printf("\nERREUR : Donnees non recuperees !\n"); 
+
+/*    j=0;
 
     do
     {
@@ -116,7 +128,8 @@ int ChargerMotCle(REPONSE *Reponses, char *Fichier)//Fonction permettant la réc
         //printf("Stream2 : \n%s\n", buffer);
         //AfficherMotCle(Reponses);
     } while(strlen(buffer)>2);
-    fclose(sauvegarde);
+  */
+    //fclose(sauvegarde);
     return 0;
 }
 int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
@@ -125,7 +138,7 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
     int i;
     for (i=0; i<32; i++) //je cherche chaque mot clé de ListeReponse
         {
-            if (strstr(Message->MSG, ListeReponse->MotCle[i])!=NULL) //trouvé mot clé
+            if (strstr(Message->MSG, ListeReponse->MotCle[i])!=NULL) //Si trouvé mot clé dans le Message reçu alors :
             {
                 strcpy(Reponse->EM,Message->EM); // Je répond a l'emmeteur
                 strcpy(Reponse->OBJ, strcat("RE:",Message->OBJ)); // j'ajoute "RE:" à l'objet

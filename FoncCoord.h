@@ -28,12 +28,13 @@ typedef struct
 
 
 
-int SaisieCoordonnees(COORDONNEES *Personne, char *Fichier); //Fonction permettant la saisie des Coordonnées d'une personne
+int SaisieCoordonnees(FILE *Fichier); //Fonction permettant la saisie des Coordonnées d'une personne
 int AfficherCoordonnees(COORDONNEES *Personne); //Fonction permettant l'affichage des Coordonnées d'une personne
-int SauverCoordonnees(COORDONNEES *Personne, char *Fichier); //Fonction permettant la sauvegarde dans un fichier des Coordonnées
-int ListerCoordonnees(char *Fichier); //Fonction affichant l'ensemble des coordonnées contenues dans un fichier
+int SauverCoordonnees(COORDONNEES *Personne, FILE *Fichier); //Fonction permettant la sauvegarde dans un fichier des Coordonnées
+int ListerCoordonnees(FILE *Fichier); //Fonction affichant l'ensemble des coordonnées contenues dans un fichier
 //int ChargerCoordonnees(COORDONNEES *Personne, char *Fichier); //Fonction permettant la récupération dans un fichier des Coordonnées
 int RechercheCoordonnees(COORDONNEES *Personne);//Fonction permettant la recherche des Coordonnées d'une personne
 
+int InitCOORDONNEES(COORDONNEES *C); //fonction qui initialise les champs vides
 
 #endif

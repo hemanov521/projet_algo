@@ -1,7 +1,7 @@
 #makefile du projet d'informatique P17 S5
 
 CC = gcc
-CFLAGS = -c -lm -Wall
+CFLAGS = -c -lm -Wall -g
 LD = gcc
 LDFLAGS = 
 RM = rm
