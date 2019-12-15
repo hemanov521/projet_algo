@@ -28,7 +28,7 @@ typedef struct
 
 
 
-int SaisieCoordonnees(FILE *Fichier); //Fonction permettant la saisie des Coordonnées d'une personne
+int SaisieCoordonnees( FILE *Fichier); //Fonction permettant la saisie des Coordonnées d'une personne COORDONNEES *Personne,
 int AfficherCoordonnees(COORDONNEES *Personne); //Fonction permettant l'affichage des Coordonnées d'une personne
 int SauverCoordonnees(COORDONNEES *Personne, FILE *Fichier); //Fonction permettant la sauvegarde dans un fichier des Coordonnées
 int ListerCoordonnees(FILE *Fichier); //Fonction affichant l'ensemble des coordonnées contenues dans un fichier

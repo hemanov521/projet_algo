@@ -30,10 +30,12 @@ int main(void)
     int choix, choix2; // déclarations des variables de choix du menu
     REPONSE reponse[1];
     //REPONSE Recup[255];
-    //COORDONNEES *UnePersonne;
+    COORDONNEES *UnePersonne;
     FILE *Repertoire, *Reponses;
     Repertoire = fopen("Repertoire.dat", "a");
     Reponses = fopen("Reponses.dat", "a");
+    //printf("size COORDONNEES : %ld", sizeof(COORDONNEES));
+    //printf("size UnePersonne : %ld", sizeof(UnePersonne));
     //strcpy(UnePersonne->Nom,"");
     //strcpy(UnePersonne->Prenom,"");
     //strcpy(UnePersonne->Email,"");
@@ -61,7 +63,7 @@ int main(void)
                 {
                     case 1: //Saisie Coord
                         printf("Saisie Coordonnes\n");
-                        SaisieCoordonnees(Repertoire);
+                        SaisieCoordonnees( Repertoire);//UnePersonne,
                         break;
                     case 2: //Lister Coord
                         ListerCoordonnees(Repertoire);

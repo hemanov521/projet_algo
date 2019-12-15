@@ -4,11 +4,34 @@
 #include "FoncCoord.h"
 
 
+
+int SaisieCoordonnees( FILE *Fichier)
+{
+    int res;
+    COORDONNEES *Personne;
+    Personne = (COORDONNEES *) malloc( sizeof(COORDONNEES) );
+    float importance=-1; //initialisation de l'importance à -1 tant que non-renseignee
+    printf("\nSaisir Nom : ");
+    res=scanf("%s", Personne->Nom); //Saisie du Nom
+    printf("\nSaisir Prenom : ");
+    res=scanf("%32s", Personne->Prenom); // Saisie du prénom
+    printf("\nSaisir Email : ");
+    res=scanf("%320s", Personne->Email); // Saisie Email
+    while(importance<0 || importance>100) {
+        printf("\nSaisir Importance du Client (en pourcentage) : "); // Saisie de l'importance en %
+        res=scanf("%f", &importance);}
+    Personne->Importance = importance/100; // Conversion du pourcentage pour enregistrement entre 0 et 1
+    SauverCoordonnees(Personne, Fichier); // Sauvegarde données dans Fichier
+    return res;
+}
+
+/*
 int SaisieCoordonnees(FILE *Fichier)
 {
     //int res;
     printf("ici ?");
-    char *chaine="";
+    char *chaine = (char *) malloc(32);
+    char *mail = (char *) malloc(320);
     COORDONNEES *Personne;
     printf("ici ?");
     float importance=0;
@@ -17,7 +40,7 @@ int SaisieCoordonnees(FILE *Fichier)
      //initialisation de l'importance à -1 tant que non-renseignee
     printf("ici ?");
     printf("\nici ?");
-    //printf("\nSaisir Nom : ");
+    printf("\nSaisir Nom : ");
     fgets(chaine, 32, stdin);
     strcpy(Personne->Nom, chaine);
     //scanf("%32s", PersonneLocal.Nom); //Saisie du Nom
@@ -37,7 +60,7 @@ int SaisieCoordonnees(FILE *Fichier)
 
     SauverCoordonnees(Personne, Fichier); // Sauvegarde données dans Fichier
     return 0;
-}
+}*/
 
 int SauverCoordonnees(COORDONNEES *Personne, FILE *Fichier)
 {
@@ -54,7 +77,7 @@ int SauverCoordonnees(COORDONNEES *Personne, FILE *Fichier)
 	else
         printf("\nERREUR : Donnees non sauvegardees !\n"); 
 */
-    fprintf(Fichier,"\n%s;%s;%s;%f",Personne->Nom, Personne->Prenom, Personne->Email, Personne->Importance); //ecriture des données
+    fprintf(Fichier,"%s;%s;%s;%f\n",Personne->Nom, Personne->Prenom, Personne->Email, Personne->Importance); //ecriture des données
     //fclose(sauvegarde); //fermeture fichier
     return 1;
 }
