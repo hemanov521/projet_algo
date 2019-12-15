@@ -63,7 +63,7 @@ int main(void)
                 {
                     case 1: //Saisie Coord
                         printf("Saisie Coordonnes\n");
-                        SaisieCoordonnees( Repertoire);//UnePersonne,
+                        SaisieCoordonnees(Repertoire);//UnePersonne,
                         break;
                     case 2: //Lister Coord
                         ListerCoordonnees(Repertoire);
