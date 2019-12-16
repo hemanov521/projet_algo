@@ -150,6 +150,17 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
    return 0;
 }
 
+int ListeReponse(FILE *Fichier)
+{
+    REPONSE *Reponses;
+    Reponses = (REPONSE *) malloc(sizeof(REPONSE));
+    fseek(Fichier, 0, SEEK_SET);
+    while (!feof(Fichier))
+    {
+        ChargerMotCle(Reponses, Fichier);
+    }
+}
+
 int AfficherMotCle(REPONSE *Reponses) //Fonction permettant l'affichage des Mots Clés et des réponses associées
 {
     int i;

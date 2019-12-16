@@ -31,9 +31,9 @@ int main(void)
     REPONSE reponse[1];
     //REPONSE Recup[255];
     COORDONNEES *UnePersonne;
-    FILE *Repertoire, *Reponses;
-    Repertoire = fopen("Repertoire.dat", "a");
-    Reponses = fopen("Reponses.dat", "a");
+    FILE *fRepertoire, *fReponses;
+    fRepertoire = fopen("Repertoire.dat", "a");
+    fReponses = fopen("Reponses.dat", "a");
     //printf("size COORDONNEES : %ld", sizeof(COORDONNEES));
     //printf("size UnePersonne : %ld", sizeof(UnePersonne));
     //strcpy(UnePersonne->Nom,"");
@@ -63,10 +63,10 @@ int main(void)
                 {
                     case 1: //Saisie Coord
                         printf("Saisie Coordonnes\n");
-                        SaisieCoordonnees(Repertoire);//UnePersonne,
+                        SaisieCoordonnees(fRepertoire);//UnePersonne,
                         break;
                     case 2: //Lister Coord
-                        ListerCoordonnees(Repertoire);
+                        ListerCoordonnees(fRepertoire);
                         break;
                     case 3: //Rechercher Coord
                         //do
@@ -75,10 +75,10 @@ int main(void)
                         //do
                         break;
                     case 5: //Saisie MotCle
-                        SaisieMotCle(reponse, Reponses);
+                        SaisieMotCle(reponse, fReponses);
                         break;
                     case 6: //Lister MotCle
-                        //do
+                        ListeReponse(fReponses);
                         break;
                     case 7: //Rechercher MotCle
                         //do
@@ -122,7 +122,7 @@ int main(void)
     SendCommand(server,"/RELAY4=ON",5000, debug);
     SendCommand(server,"/RELAY4=OFF",5000, debug);
     }*/
-    fclose(Repertoire);
-    fclose(Reponses);
+    fclose(fRepertoire);
+    fclose(fReponses);
     return 1;
 }
