@@ -1,0 +1,19 @@
+Ce qu'on a fait (3 lignes)
+Les difficultés qu'on a rencontré (3 lignes)
+Les solutions qu'on a appliqué (3 lignes)
+Notre ressenti global (conclusion ~3 lignes tranquilles)
+
+Les roles qui m'ont été attribués sont ceux de Développeur Technique et de Suivi du projet.
+Dans la pratique, me concernant la part "Développeur" à mobilisé la quasi-totalité du temps consacré à ce projet et je dois avouer que la partie "suivi du projet" a été quelque peu délaissée.
+
+Les principales difficultés que j'ai rencontré ont été liées à la syntaxe du code  ainsi qu'a la gestion de la mémoire et des fichiers. En effet, je n'avais pas programmé en C depuis une quinzaine d'années (et le C est très sensible à la syntaxe...) et l'utilisation des pointeurs, l'allocation de mémoire, et la gestion des fichiers est bien plus compliquée en C que dans les autres language que j'ai eu à utiliser dans les métiers ou loisirs effectués.
+
+Pour résoudre les difficultés rencontrées, je me suis aidé principalement de recherches sur internet, notamment du site koor.fr.
+J'ai également échangé avec mes 2 collègues et je leur ai délégué la rédaction de quelques fonctions spécifiques à notre projet.
+
+Mon ressenti à ce stade du projet est que nous avons pris la répartition des roles décrite dans le sujet un peu trop au pied de la lettre sans que je me rende compte que la répartition était inéquitable.
+Je me suis beaucoup investi, en temps, sans parvenir au résultat escompté, et c'est pour moi une déception.
+Avec du recul, nous aurions du passer plus de temps a analyser le contenu des attendus et nous répartir les tâche d'une manière différente.
+En outre, la double casquette "Gestion de projet" et "Développeur" oblige a avoir à la fois une vision globale de l'avancement et a traiter précisément les difficultés techniques. Ce changement de vision "proche/lointain" est, il me semble, d'une grande complexité.
+
+Je concluerait en disant que ce projet m'a permis de me replonger dans la programmation C ce qui est finalement plaisant. J'aurai apprécié que ce retour aux sources ce fasse un peu moins dans la douleur...

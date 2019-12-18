@@ -54,26 +54,16 @@ int ListerCoordonnees(FILE *Fichier) // Fonction d'affichage de l'ensemble du rÃ
 		fprintf(stderr, "\nERREUR : l'acces au fichier n'a pas fonctionne !\n"); 
 		exit (1); 
 	} 
-
     fseek(Fichier,0,SEEK_SET);
     while(!feof(Fichier))
     {
-       /* printf("Curseur : %d\n", ftell(Fichier));
-        fgets(Personne->Email, 320, Fichier);
-        printf("1%s\n",Personne->Email);
-        fseek(Fichier,0,SEEK_SET);
-        printf("Curseur : %d\n", ftell(Fichier));
-        fgets(Personne->Email, 320, Fichier);
-        printf("2%s\n",Personne->Email);
-        fread(test, 320,2, Fichier );
-        printf("3%s\n",test);
-         */
-        fscanf(Fichier,"%s;%s;%s;%f\n",Personne->Nom, Personne->Prenom, Personne->Email, Personne->Importance);
+        fscanf(Fichier,"%[^;]%*c", Personne->Nom); // je lis un char * (donc un string) jusqu'au premier ; ou \n
+        fscanf(Fichier,"%[^;]%*c", Personne->Prenom);// je lis un char * (donc un string) jusqu'au premier ; ou \n
+        fscanf(Fichier,"%[^;]%*c", Personne->Email);// je lis un char * (donc un string) jusqu'au premier ; ou \n
+        fscanf(Fichier,"%f\n", &Personne->Importance);// je lis un float et \n
         AfficherCoordonnees(Personne);
-        //offset=sizeof(Personne->Nom)+ sizeof(Personne->Prenom) +sizeof(Personne->Email)+ sizeof(Personne->Importance)+4;
-        //fseek(Fichier, offset, SEEK_CUR);
     }
-     return 1;
+    return 1;
 }
 
 int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier)
@@ -93,7 +83,7 @@ int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier)
     //fread(&UnePersonne, sizeof(COORDONNEES),1,sauvegarde);
     fscanf(Fichier,"%s;%s;%s;%f",Personne->Nom, Personne->Prenom, Personne->Email, Personne->Importance);
     //printf("\nNom : %s\nPrenom : %s\nEmail : %s\nImportance : %.0f%%\n", UnePersonne->Nom, UnePersonne->Prenom, UnePersonne->Email, 100*UnePersonne->Importance);
-    //AfficherCoordonnees(UnePersonne);
+    AfficherCoordonnees(Personne);
     /*while (fread(&UnePersonne, sizeof(COORDONNEES),1,sauvegarde)!=0)
     {
         //Personne=UnePersonne;

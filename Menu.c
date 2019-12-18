@@ -31,8 +31,10 @@ int main(void)
     REPONSE reponse[1];
     //REPONSE Recup[255];
     COORDONNEES *UnePersonne;
+    COORDONNEES *Pleindepersonnes;
+    Pleindepersonnes=(COORDONNEES *) malloc (100*sizeof(COORDONNEES));
     FILE *fRepertoire, *fReponses;
-    fRepertoire = fopen("Repertoire.dat", "a");
+    fRepertoire = fopen("Repertoire.dat", "a+");
     fReponses = fopen("Reponses.dat", "a");
     //printf("size COORDONNEES : %ld", sizeof(COORDONNEES));
     //printf("size UnePersonne : %ld", sizeof(UnePersonne));
@@ -71,6 +73,7 @@ int main(void)
                         break;
                     case 3: //Rechercher Coord
                         //do
+                        ChargerCoordonnees(Pleindepersonnes, fRepertoire);
                         break;
                     case 4: //Supprimer Coord
                         //do
