@@ -143,11 +143,11 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
     {
             if (strcmp(word,ListeReponse->MotCle)==0) //Comparation mot a mot // trouvé mot clé
 */            
-    for(i=0, i<=32, i++)
+    for(i=0; i<=32; i++)
     {   
             if (strstr(Message->MSG,ListeReponse->MotCle[i]) != NULL) // Trouvé mot clé
             {
-                printf("Mot cle identifie : %s \n",word);
+                printf("Mot cle identifie : %s \n",ListeReponse->MotCle[i]);
                 strcpy(Reponse->EM,Message->EM); // Je répond a l'emmeteur
                 strcpy(Reponse->OBJ, strcat(re,Message->OBJ)); // j'ajoute "RE:" à l'objet
                 strcpy(Reponse->MSG, ListeReponse->Reponse); // J'envoie la réponse "qui va bien"
