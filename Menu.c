@@ -58,6 +58,7 @@ int main(void)
             case 2: //Administrateur
                 printf("\t1 - Saisir Coordonnes\n\t2 - Lister Coordonnees\n\t3 - Rechercher coordonnes\n\t4 - Supprimer coordonnee\n\n\t5 - Saisir Mot Cle / reponse\n\t6 - Lister Mot cle / Reponse\n\t7 - Rechercher Mot Cle / Reponse\n\t8 - Supprimer Mot Cle / Reponse\n\t0 - Sortie\n\nChoix : ");
                 scanf("%d", &choix2);
+                getchar();//suppression retour charriot
                 printf("vous avez choisi '%d' : ",choix2);
                 switch(choix2)
                 {

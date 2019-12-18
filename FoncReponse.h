@@ -24,9 +24,9 @@ typedef struct
 
 typedef struct
 {
-    char *EM[320]; // Emetteur du message
-    char *OBJ[77]; //Objet du Message : Longueur Max Gmail/Yahoo
-    char *MSG[255]; //Texte du message
+    char EM[320]; // Emetteur du message
+    char OBJ[77]; //Objet du Message : Longueur Max Gmail/Yahoo
+    char MSG[255]; //Texte du message
 }MESSAGE;
 
 int SaisieMotCle(REPONSE *Reponses, FILE *Fichier); //Fonction permettant la saisie des Mots Clés et des réponses associées

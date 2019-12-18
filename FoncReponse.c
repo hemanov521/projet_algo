@@ -41,7 +41,7 @@ int SauverMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la sauve
 {
     //FILE *sauvegarde;
     //char ListeMots[32*26]="";
-    int i;
+    //int i;
     //sauvegarde = fopen(Fichier, "a");
  	if (Fichier == NULL) 
 	{ 
@@ -87,7 +87,7 @@ int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la réc
     char Action[255]; // jusqu'a 256 caractères
     char Reponse[255]; // jusqu'a 256 caractères*/
     //fseek(sauvegarde,0,SEEK_SET); // Curseur au début du fichier
-    //printf("Curseur set");
+    printf("%ld\n", fread(&Reponses, sizeof(REPONSE),1, Fichier));
     if(fread(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
 		printf("Donnees recuperees !\n"); 
 	else
@@ -134,31 +134,49 @@ int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la réc
 }
 int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
 {
-    //char *ret;
-    int i;
-    for (i=0; i<32; i++) //je cherche chaque mot clé de ListeReponse
-        {
-            if (strstr(Message->MSG, ListeReponse->MotCle[i])!=NULL) //Si trouvé mot clé dans le Message reçu alors :
+   //const char * word; //variable contenant 1 seul mot
+   int i=0;
+   char re[77]="RE: "; //variable contenant l'OBJET de la réponse
+   Reponse = (MESSAGE *) malloc( sizeof(MESSAGE) ); //allocation de mémoire pour la réponse
+/*    word = strtok(Message->MSG, " ,.-"); //découpage du message en mots
+    while(word != NULL)
+    {
+            if (strcmp(word,ListeReponse->MotCle)==0) //Comparation mot a mot // trouvé mot clé
+*/            
+    for(i=0, i<=32, i++)
+    {   
+            if (strstr(Message->MSG,ListeReponse->MotCle[i]) != NULL) // Trouvé mot clé
             {
+                printf("Mot cle identifie : %s \n",word);
                 strcpy(Reponse->EM,Message->EM); // Je répond a l'emmeteur
-                strcpy(Reponse->OBJ, strcat("RE:",Message->OBJ)); // j'ajoute "RE:" à l'objet
+                strcpy(Reponse->OBJ, strcat(re,Message->OBJ)); // j'ajoute "RE:" à l'objet
                 strcpy(Reponse->MSG, ListeReponse->Reponse); // J'envoie la réponse "qui va bien"
                 break; // je sors de la boucle
             }
-        }
-   //printf("The substring is: %s\n", ret);
+    }
+//            word = strtok(NULL, " ,.-");
+//        }
+   /*printf("Reponse transmise : \n");
+   printf("Destinataire : %s\n", Reponse->EM);
+   printf("Objet : %s\n", Reponse->OBJ);
+   printf("Message : %s\n", Reponse->MSG);*/
    return 0;
 }
 
 int ListeReponse(FILE *Fichier)
 {
+    int i = 0;
     REPONSE *Reponses;
     Reponses = (REPONSE *) malloc(sizeof(REPONSE));
+    printf("ftell : %ld\n",ftell(Fichier));
     fseek(Fichier, 0, SEEK_SET);
-    while (!feof(Fichier))
+    while (!feof(Fichier)&&i<5)
     {
+        printf("ftell : %ld\n",ftell(Fichier));
         ChargerMotCle(Reponses, Fichier);
+        i++;
     }
+    return 1;
 }
 
 int AfficherMotCle(REPONSE *Reponses) //Fonction permettant l'affichage des Mots Clés et des réponses associées

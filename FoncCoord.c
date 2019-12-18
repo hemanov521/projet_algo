@@ -56,8 +56,8 @@ int ListerCoordonnees(FILE *Fichier) // Fonction d'affichage de l'ensemble du rÃ
 	} 
 
     fseek(Fichier,0,SEEK_SET);
-    while(!feof(Fichier))
-    {
+    //while(!feof(Fichier))
+    //{
        /* printf("Curseur : %d\n", ftell(Fichier));
         fgets(Personne->Email, 320, Fichier);
         printf("1%s\n",Personne->Email);
@@ -72,7 +72,7 @@ int ListerCoordonnees(FILE *Fichier) // Fonction d'affichage de l'ensemble du rÃ
         AfficherCoordonnees(Personne);
         offset=sizeof(Personne->Nom)+ sizeof(Personne->Prenom) +sizeof(Personne->Email)+ sizeof(Personne->Importance)+4;
         fseek(Fichier, offset, SEEK_CUR);
-    }
+    //}
      return 1;
 }
 
