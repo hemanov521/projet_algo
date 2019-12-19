@@ -32,10 +32,13 @@ int SaisieCoordonnees( FILE *Fichier); //Fonction permettant la saisie des Coord
 int AfficherCoordonnees(COORDONNEES *Personne); //Fonction permettant l'affichage des Coordonnées d'une personne
 int SauverCoordonnees(COORDONNEES *Personne, FILE *Fichier); //Fonction permettant la sauvegarde dans un fichier des Coordonnées
 int ListerCoordonnees(FILE *Fichier); //Fonction affichant l'ensemble des coordonnées contenues dans un fichier
-//int ChargerCoordonnees(COORDONNEES *Personne, char *Fichier); //Fonction permettant la récupération dans un fichier des Coordonnées
-int RechercheCoordonnees(COORDONNEES *Personne);//Fonction permettant la recherche des Coordonnées d'une personne
+int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier); //Fonction permettant la récupération dans un fichier des Coordonnées
+//int RechercheCoordonnees(COORDONNEES *Personne, FILE *Fichier);//Fonction permettant la recherche des Coordonnées d'une personne
+int RechercheCoordonnees(COORDONNEES *Personne, FILE *Fichier, int choix);
 void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier); //Fonction permettant de supprimer les coordonnées a partir d'un mot 
 
 int InitCOORDONNEES(COORDONNEES *C); //fonction qui initialise les champs vides
+
+char *GetFilename(FILE *Fichier); //Fonction qui retourne l'adresse du fichier à partir de son pointeur
 
 #endif

@@ -26,8 +26,11 @@ En fichiers binaires :
 */
 int main(void)
 {
-    int choix, choix2; // déclarations des variables de choix du menu
-    char Supp[320];
+    int choix, choix2, choix3; // déclarations des variables de choix du menu
+    choix=-1;
+    choix2=-1;
+    choix3=-1;
+    char *Supp=(char *)calloc(32, sizeof(char));//[320];
     //char *NomRepertoire, NomReponses;
     FILE *fRepertoire, *fReponses;
     /*fReponses= fopen("Config.ini","w+");
@@ -41,10 +44,11 @@ int main(void)
     fscanf("%s",&NomRepertoire);
     fclose(fReponses);
     printf("Repertoire : %s\nReponses : %s\n", NomRepertoire, NomReponses);
-    *///COORDONNEES *UnePersonne;
+    *///
     //COORDONNEES *Pleindepersonnes;
     //Pleindepersonnes=(COORDONNEES *) malloc (100*sizeof(COORDONNEES));
     REPONSE *reponse = (REPONSE *)calloc(1, sizeof(REPONSE));
+    COORDONNEES *UnePersonne = (COORDONNEES *)calloc(1, sizeof(COORDONNEES));
     //InitReponse(reponse, 1);
     //AfficherMotCle(reponse);
     //fReponses = fopen("testreponse.dat", "w");
@@ -67,20 +71,25 @@ int main(void)
     
     char server[]="192.168.43.145"; // déclaration de l'URL du serveur
     //char *server="192.168.0.38";
-    int debug = 1;
+    //int debug = 1;
     //printf("%ld\n",sizeof(test));
     printf("Bienvenue !\n\n");
+    while(choix!=0)
+    {
+
+   
         printf("1 - Mode Utilisateur\n2 - Mode Administrateur\n0 - Sortie\n\nChoix : ");
         scanf("%d", &choix);
+        getchar();//suppression retour chariot
         //printf("vous avez choisi '%c'\n",choix);
         switch(choix)
         {
             case 1: //utilisateur
                 //do
-                printf("Case 1");
+                printf("Case 1 : inactive\n");
                 break;
             case 2: //Administrateur
-                printf("\t1 - Saisir Coordonnes\n\t2 - Lister Coordonnees\n\t3 - Rechercher coordonnes\n\t4 - Supprimer coordonnee\n\n\t5 - Saisir Mot Cle / reponse\n\t6 - Lister Mot cle / Reponse\n\t7 - Rechercher Mot Cle / Reponse\n\t8 - Supprimer Mot Cle / Reponse\n\t0 - Sortie\n\nChoix : ");
+                printf("\t1 - Saisir Coordonnes\n\t2 - Lister Coordonnees\n\t3 - Rechercher coordonnes\n\t4 - Supprimer coordonnee\n\n\t5 - Saisir Mot Cle / reponse\n\t6 - Lister Mot cle / Reponse\n\t7 - Rechercher Mot Cle / Reponse\n\t8 - Supprimer Mot Cle / Reponse\n\n\t9 - Saisie Action Manuelle\n\t0 - Sortie\n\nChoix : ");
                 scanf("%d", &choix2);
                 getchar();//suppression retour charriot
                 printf("vous avez choisi '%d' : ",choix2);
@@ -97,6 +106,34 @@ int main(void)
                     case 3: //Rechercher Coord
                         //do
                         //ChargerCoordonnees(Pleindepersonnes, fRepertoire);
+                        printf("\nRechercher par : \n1-Nom\n2-Prenom\n3-Email\nChoix : ");
+                        scanf("%d",&choix3);
+                        switch(choix3)
+                        {
+                            case 1:{
+                                    printf("\nSaisir Nom : ");
+                                    scanf("%s", UnePersonne->Nom);
+                                    strcpy(UnePersonne->Prenom,"");
+                                    strcpy(UnePersonne->Email,"");
+                                    break;
+                                }
+                            case 2:{
+                                    printf("\nSaisir Prenom : ");
+                                    scanf("%s", UnePersonne->Prenom);
+                                    strcpy(UnePersonne->Nom,"");
+                                    strcpy(UnePersonne->Email,"");
+                                    break;
+                                }
+                            case 3:{
+                                    printf("\nSaisir Email : ");
+                                    scanf("%s", UnePersonne->Email);
+                                    strcpy(UnePersonne->Prenom,"");
+                                    strcpy(UnePersonne->Nom,"");
+                                    break;
+                                }
+                        }
+                        UnePersonne->Importance=0;
+                        RechercheCoordonnees(UnePersonne, fRepertoire, choix3);
                         break;
                     case 4: //Supprimer Coord
                         //do
@@ -117,12 +154,17 @@ int main(void)
                     case 8: //Supprimer MotCle
                         //do
                         break;
+                    case 9:
+                        printf("Saisie Action Manuelle :\n Veuillez Saisir l'action a executer (Par ex /RELAY1=ON) :");
+                        scanf("%s",reponse->Action);
+                        SendCommand(server,reponse->Action,5000, 1);
+                        break;
                     case 0:
                         break;
                 };
                 break;
             case 0: // Sortie
-                printf("case 0");
+                printf(">>> Sortie\n");
                 //do
                 break;
             default:
@@ -131,7 +173,7 @@ int main(void)
                 
         };
 
-    
+    } 
     //AfficherCoordonnees(test);
     //SauverCoordonnees(test, "repertoire.txt");
     //ChargerCoordonnees("repertoire.txt");
@@ -155,5 +197,9 @@ int main(void)
     //}*/
     fclose(fRepertoire);
     fclose(fReponses);
+    free(UnePersonne);
+    free(reponse);
+    free(Supp);
+
     return 1;
 }

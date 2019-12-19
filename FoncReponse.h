@@ -32,13 +32,15 @@ typedef struct
 int SaisieMotCle(REPONSE *Reponses, FILE *Fichier); //Fonction permettant la saisie des Mots Clés et des réponses associées
 int AfficherMotCle(REPONSE *Reponses); //Fonction permettant l'affichage des Mots Clés et des réponses associées
 int SauverMotCle(REPONSE *Reponses, FILE *Fichier);//Fonction permettant la sauvegarde dans un fichier des Mots clés et des réponses
-int SupprimerMotCle(REPONSE *Reponse, FILE *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
+//int SupprimerMotCle(char *MotCle, char *Fichier);//
+int SupprimerMotCle(char *MotCle, FILE *Fichier);
+//int SupprimerMotCle(REPONSE *Reponse, FILE *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
 int ChargerMotCle(REPONSE *Reponse, FILE *Fichier);//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
 int RechercheMotCle(REPONSE *MotCleCherche, FILE *Fichier);//Fonction permettant la recherche de Mots clés et de la réponse assocée
 int ListeReponse(FILE *Fichier);
 int InitReponse(REPONSE * Rep, int Number);
 char *charcat(char *premier, char *deuxieme);
-char *int2char(int * input);
+char *int2char(int input);
 
 int SaisieMessage(MESSAGE *MessageRecu);
 int GenererReponse(MESSAGE *MessageRecu, MESSAGE *MessageReponse);

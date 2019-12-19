@@ -74,7 +74,7 @@ int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la réc
     //FILE *sauvegarde;
     //char *buffer, *token;
     //char ListeMots[32*26]="";
-    int i,j;
+    int i;//,j;
     //sauvegarde = fopen(Fichier, "r"); /// ouverture pour lecture
  	if (Fichier == NULL) 
 	{ 
@@ -166,8 +166,8 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
 
 int ListeReponse(FILE *Fichier)
 {
-    int i,j = 0;
-    char *buffer=(char *)malloc(sizeof(char)*1500);
+    int i;//,j = 0;
+    //char *buffer=(char *)malloc(sizeof(char)*1500);
     //j=sizeof(REPONSE);
     REPONSE *Reponses = (REPONSE *) malloc(sizeof(REPONSE));
     //printf("\nftell1 : %ld\nSizeof(REPONSE) : %d \nCalcul : %d\n",ftell(Fichier), sizeof(REPONSE), ftell(Fichier)-sizeof(REPONSE)/2);
@@ -212,6 +212,92 @@ int AfficherMotCle(REPONSE *Reponses) //Fonction permettant l'affichage des Mots
 /*int SupprimerMotCle(REPONSE *Reponse, char *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
 */
 
+int SupprimerMotCle(char *MotCle, FILE *Fichier)//(char * MotCle)
+{
+    REPONSE *ReponseLigne;
+    const char *Tampon = "TamponReponses.dat";
+    //FILE *rep;
+    FILE *repcopie;
+    repcopie = fopen(Tampon, "wb");
+
+    int MAXSIZE = 0xFFF;
+    char proclnk[0xFFF];
+    char filename[0xFFF];
+    int fno;
+    ssize_t r;
+    int i=0;
+    int detecte=0;
+    int fichier_modifie=0;
+    int j=0;
+
+    if (Fichier != NULL)
+    {
+        fno = fileno(Fichier); // Récupération adresse mémoire du fichier
+        sprintf(proclnk, "/proc/self/fd/%d", fno);
+        r = readlink(proclnk, filename, MAXSIZE); //Récupération adresse absolue dans filename
+        if (r < 0)
+        {
+            printf("failed to readlink\n");
+            exit(1);
+        }
+        filename[r] = '\0';
+        //printf("Fichier -> fno -> filename: %p -> %d -> %s\n", Fichier, fno, filename);
+    }
+
+
+    //rep = fopen("Reponses.dat", "rb");
+    fseek(Fichier, 0, SEEK_SET);
+    while(1)
+    {
+        if(feof(Fichier))
+        {
+            printf("Mot cle non detecte\n"); 
+            break;
+        } 
+        j++;
+        fread(&ReponseLigne,sizeof(REPONSE),1,Fichier);
+        //printf("Ligne numero : %i\n",j);
+        for (i=0; i<32; i++)
+        {
+            if(strstr(ReponseLigne->MotCle[i],MotCle)!=NULL)
+            {
+                printf("Mot cle detecte : %s dans \n",ReponseLigne->MotCle[i]);
+                AfficherMotCle(ReponseLigne);
+                printf("\n >>> SUPPRESSION\n\n");
+                detecte=1;
+            }
+        //printf("%s\n",ReponseLigne.MotCle[i]);
+        }
+        if(detecte==0)
+        {
+            fwrite(&ReponseLigne,sizeof(REPONSE),1,repcopie);
+        }
+        else
+        {
+            detecte=0;
+        }
+    }
+    fclose(Fichier);
+    fclose(repcopie);
+    if(fichier_modifie==1)
+    {
+        remove(filename);
+        rename(Tampon,filename);
+    }
+    else
+    {
+        remove(Tampon);
+    }
+    free(repcopie);
+    Fichier=fopen(filename, "a+");
+    return 1;
+}
+
+
+
+
+
+
 /*char * getfield(char *line, int num)
 {
     char *tok;
@@ -232,14 +318,14 @@ int InitReponse(REPONSE * Rep, int Number)
     //char Reponse[255]; // jusqu'a 256 caractères
     for (i=0;i<32;i++)
     {
-        strcpy(Rep->MotCle[i], charcat("MotCle-%d-",Number,int2char(i)));
+        strcpy(Rep->MotCle[i], charcat("MotCle-",int2char(i)));
     }
-    strcpy(Rep->Action, "Action %d", Number);
-    strcpy(Rep->Reponse, "Reponse %d", Number);
+    strcpy(Rep->Action, "Action");
+    strcpy(Rep->Reponse, "Reponse");
     return 1;
 }
 
-char *int2char(int * input)
+char *int2char(int input)
 {
     char *buffer;//=(char *)calloc(1, sizeof(char));
     //itoa(input,buffer,10);
