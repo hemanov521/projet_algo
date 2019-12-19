@@ -2,6 +2,7 @@
 ***     COORDONNEES     ***
 ***************************/
 #include "FoncCoord.h"
+#include <unistd.h>
 
 
 
@@ -81,7 +82,7 @@ int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier)
 
     //fseek(sauvegarde,0,SEEK_SET);
     //fread(&UnePersonne, sizeof(COORDONNEES),1,sauvegarde);
-    fscanf(Fichier,"%s;%s;%s;%f",Personne->Nom, Personne->Prenom, Personne->Email, Personne->Importance);
+    fscanf(Fichier,"%s;%s;%s;%f",Personne->Nom, Personne->Prenom, Personne->Email, &(Personne->Importance));
     //printf("\nNom : %s\nPrenom : %s\nEmail : %s\nImportance : %.0f%%\n", UnePersonne->Nom, UnePersonne->Prenom, UnePersonne->Email, 100*UnePersonne->Importance);
     AfficherCoordonnees(Personne);
     /*while (fread(&UnePersonne, sizeof(COORDONNEES),1,sauvegarde)!=0)
@@ -149,7 +150,7 @@ if(copie==NULL)
         scanf("%d", &fno);
         getchar();//suppression retour charriot
         if (fno!=1) 
-        {   printf("taille ligne : %d\n",strlen(ligne));
+        {   printf("taille ligne : %ld\n",strlen(ligne));
             //buffer = (char *) realloc(buffer, strlen(ligne)*sizeof(char));
             //fputs(ligne, copie);
             strcat(buffer, ligne);

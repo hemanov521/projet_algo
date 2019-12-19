@@ -26,11 +26,22 @@ En fichiers binaires :
 */
 int main(void)
 {
-    //COORDONNEES *test[1];
     int choix, choix2; // déclarations des variables de choix du menu
-    char *Supp[320];
+    char Supp[320];
+    //char *NomRepertoire, NomReponses;
     FILE *fRepertoire, *fReponses;
-    //COORDONNEES *UnePersonne;
+    /*fReponses= fopen("Config.ini","w+");
+    fputs("Repertoire.dat\n",fReponses);
+    fputs("Reponses.dat\n",fReponses);
+    //fclose(fReponses);
+    //fReponses= fopen("Config.ini","r");
+    printf("1\n");
+    fscanf("%s",&NomReponses);
+    printf("Repertoire : %s\nReponses : %s\n", NomRepertoire, NomReponses);
+    fscanf("%s",&NomRepertoire);
+    fclose(fReponses);
+    printf("Repertoire : %s\nReponses : %s\n", NomRepertoire, NomReponses);
+    *///COORDONNEES *UnePersonne;
     //COORDONNEES *Pleindepersonnes;
     //Pleindepersonnes=(COORDONNEES *) malloc (100*sizeof(COORDONNEES));
     REPONSE *reponse = (REPONSE *)calloc(1, sizeof(REPONSE));
@@ -54,9 +65,9 @@ int main(void)
     //strcpy(UnePersonne->Email,"");
     //UnePersonne->Importance=0;
     
-    //char server[]="192.168.43.145"; // déclaration de l'URL du serveur
+    char server[]="192.168.43.145"; // déclaration de l'URL du serveur
     //char *server="192.168.0.38";
-    //int debug = 1;
+    int debug = 1;
     //printf("%ld\n",sizeof(test));
     printf("Bienvenue !\n\n");
         printf("1 - Mode Utilisateur\n2 - Mode Administrateur\n0 - Sortie\n\nChoix : ");
@@ -90,7 +101,7 @@ int main(void)
                     case 4: //Supprimer Coord
                         //do
                         printf("Suppression des Coordonnees\n\nPersonne a eliminer : ");
-                        scanf("%32s", &Supp);
+                        scanf("%32s", Supp);
                         getchar();
                         SupprimerLigneCoordonnees(Supp, fRepertoire);
                         break;
@@ -133,15 +144,15 @@ int main(void)
     //printf("Chargement termine");
     /*while (1)
     {
-    SendCommand(server,"/RELAY1=ON",5000, debug);
-    SendCommand(server,"/RELAY1=OFF",5000, debug);
-    SendCommand(server,"/RELAY2=ON",5000, debug);
-    SendCommand(server,"/RELAY2=OFF",5000, debug);
-    SendCommand(server,"/RELAY3=ON",5000, debug);
-    SendCommand(server,"/RELAY3=OFF",5000, debug);
-    SendCommand(server,"/RELAY4=ON",5000, debug);
-    SendCommand(server,"/RELAY4=OFF",5000, debug);
-    }*/
+    SendCommand(server,"/RELAY1=ON",50000, debug);
+    SendCommand(server,"/RELAY1=OFF",50000, debug);
+    SendCommand(server,"/RELAY2=ON",50000, debug);
+    SendCommand(server,"/RELAY2=OFF",50000, debug);
+    SendCommand(server,"/RELAY3=ON",50000, debug);
+    SendCommand(server,"/RELAY3=OFF",50000, debug);
+    SendCommand(server,"/RELAY4=ON",50000, debug);
+    SendCommand(server,"/RELAY4=OFF",50000, debug);
+    //}*/
     fclose(fRepertoire);
     fclose(fReponses);
     return 1;

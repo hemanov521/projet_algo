@@ -225,25 +225,25 @@ int AfficherMotCle(REPONSE *Reponses) //Fonction permettant l'affichage des Mots
 
 int InitReponse(REPONSE * Rep, int Number)
 {
-    int i,j;
+    int i;
 
     //char MotCle[32][26]; //32 mots clés de 26 caractères max
     //char Action[255]; // jusqu'a 256 caractères
     //char Reponse[255]; // jusqu'a 256 caractères
     for (i=0;i<32;i++)
     {
-        strcpy(Rep->MotCle[i], charcat("MotCle",int2char(i)));
+        strcpy(Rep->MotCle[i], charcat("MotCle-%d-",Number,int2char(i)));
     }
-    strcpy(Rep->Action, "Action");
-    strcpy(Rep->Reponse, "Reponse 1");
+    strcpy(Rep->Action, "Action %d", Number);
+    strcpy(Rep->Reponse, "Reponse %d", Number);
     return 1;
 }
 
 char *int2char(int * input)
 {
-    char *buffer;
+    char *buffer;//=(char *)calloc(1, sizeof(char));
     //itoa(input,buffer,10);
-    sprintf(buffer, "%d", input );
+    sprintf(buffer, "%d", input);
     return buffer;
 }
 
