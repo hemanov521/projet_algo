@@ -60,7 +60,7 @@ int SauverMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la sauve
     fprintf(Fichier,"%s\n",Reponses->Reponse);
     */
 
-    if(fwrite(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
+    if(fwrite(Reponses, sizeof(REPONSE),1, Fichier) != 0) 
 		printf("Donnees sauvegardees !\n"); 
 	else
         printf("\nERREUR : Donnees non sauvegardees !\n"); 
@@ -74,7 +74,7 @@ int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la réc
     //FILE *sauvegarde;
     //char *buffer, *token;
     //char ListeMots[32*26]="";
-    //int i,j;
+    int i,j;
     //sauvegarde = fopen(Fichier, "r"); /// ouverture pour lecture
  	if (Fichier == NULL) 
 	{ 
@@ -86,13 +86,14 @@ int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la réc
     /*char MotCle[32][26]; //32 mots clés de 26 caractères max
     char Action[255]; // jusqu'a 256 caractères
     char Reponse[255]; // jusqu'a 256 caractères*/
-    //fseek(sauvegarde,0,SEEK_SET); // Curseur au début du fichier
-    printf("%ld\n", fread(&Reponses, sizeof(REPONSE),1, Fichier));
-    if(fread(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
+    fseek(Fichier,0,SEEK_SET); // Curseur au début du fichier
+    i=fread(&Reponses, sizeof(REPONSE),1, Fichier);
+    printf("%d\n", i);
+    /*if(fread(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
 		printf("Donnees recuperees !\n"); 
 	else
         printf("\nERREUR : Donnees non recuperees !\n"); 
-
+*/
 /*    j=0;
 
     do
@@ -165,18 +166,36 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
 
 int ListeReponse(FILE *Fichier)
 {
-    int i = 0;
-    REPONSE *Reponses;
-    Reponses = (REPONSE *) malloc(sizeof(REPONSE));
-    printf("ftell : %ld\n",ftell(Fichier));
-    fseek(Fichier, 0, SEEK_SET);
-    while (!feof(Fichier)&&i<5)
+    int i,j = 0;
+    char *buffer=(char *)malloc(sizeof(char)*1500);
+    //j=sizeof(REPONSE);
+    REPONSE *Reponses = (REPONSE *) malloc(sizeof(REPONSE));
+    //printf("\nftell1 : %ld\nSizeof(REPONSE) : %d \nCalcul : %d\n",ftell(Fichier), sizeof(REPONSE), ftell(Fichier)-sizeof(REPONSE)/2);
+    //fseek(Fichier, ftell(Fichier), SEEK_SET);
+    fseek(Fichier, 0, SEEK_END);
+    i= fread(Reponses, sizeof(REPONSE),1, Fichier);
+    printf("fread : %d\n",i);    printf("ftell2 : %ld\n",ftell(Fichier));
+    fseek(Fichier, -(sizeof(REPONSE)), SEEK_CUR);
+    printf("ftell3 : %ld\n",ftell(Fichier));
+    /*fseek(Fichier, ftell(Fichier)-sizeof(REPONSE), SEEK_CUR);//SEEK_CUR semble ne pas fonctionner
+    printf("ftell4 : %ld\n",ftell(Fichier));
+    */
+    i= fread(Reponses, sizeof(REPONSE),1, Fichier);
+    //i= fread(buffer, 1,1342, Fichier);
+    printf("fread : %d\n",i);
+    AfficherMotCle(Reponses);
+    //fread(&Reponses, sizeof(REPONSE),1, Fichier);
+    //AfficherMotCle(Reponses);
+    //fread(&Reponses, sizeof(REPONSE),1, Fichier);
+    //AfficherMotCle(Reponses);
+
+    /*while (!feof(Fichier)&&i<5)
     {
         printf("ftell : %ld\n",ftell(Fichier));
         ChargerMotCle(Reponses, Fichier);
         i++;
-    }
-    return 1;
+    }*/
+    return i;
 }
 
 int AfficherMotCle(REPONSE *Reponses) //Fonction permettant l'affichage des Mots Clés et des réponses associées
@@ -203,3 +222,35 @@ int AfficherMotCle(REPONSE *Reponses) //Fonction permettant l'affichage des Mots
     }
     return NULL;
 }*/
+
+int InitReponse(REPONSE * Rep, int Number)
+{
+    int i,j;
+
+    //char MotCle[32][26]; //32 mots clés de 26 caractères max
+    //char Action[255]; // jusqu'a 256 caractères
+    //char Reponse[255]; // jusqu'a 256 caractères
+    for (i=0;i<32;i++)
+    {
+        strcpy(Rep->MotCle[i], charcat("MotCle",int2char(i)));
+    }
+    strcpy(Rep->Action, "Action");
+    strcpy(Rep->Reponse, "Reponse 1");
+    return 1;
+}
+
+char *int2char(int * input)
+{
+    char *buffer;
+    //itoa(input,buffer,10);
+    sprintf(buffer, "%d", input );
+    return buffer;
+}
+
+char *charcat(char *premier, char *deuxieme)
+{
+    char *resultat = (char *)calloc(1, sizeof(premier)+sizeof(deuxieme));
+    strcpy(resultat,premier);
+    strcat(resultat, deuxieme);
+    return resultat;
+}

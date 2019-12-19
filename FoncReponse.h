@@ -35,6 +35,10 @@ int SauverMotCle(REPONSE *Reponses, FILE *Fichier);//Fonction permettant la sauv
 int SupprimerMotCle(REPONSE *Reponse, FILE *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
 int ChargerMotCle(REPONSE *Reponse, FILE *Fichier);//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
 int RechercheMotCle(REPONSE *MotCleCherche, FILE *Fichier);//Fonction permettant la recherche de Mots clés et de la réponse assocée
+int ListeReponse(FILE *Fichier);
+int InitReponse(REPONSE * Rep, int Number);
+char *charcat(char *premier, char *deuxieme);
+char *int2char(int * input);
 
 int SaisieMessage(MESSAGE *MessageRecu);
 int GenererReponse(MESSAGE *MessageRecu, MESSAGE *MessageReponse);

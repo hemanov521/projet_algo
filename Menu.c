@@ -27,15 +27,26 @@ En fichiers binaires :
 int main(void)
 {
     //COORDONNEES *test[1];
-    int choix, choix2; // déclarations des variables de choix du menu
-    REPONSE reponse[1];
-    //REPONSE Recup[255];
-    COORDONNEES *UnePersonne;
-    COORDONNEES *Pleindepersonnes;
-    Pleindepersonnes=(COORDONNEES *) malloc (100*sizeof(COORDONNEES));
+    //int choix, choix2; // déclarations des variables de choix du menu
+    //char *Supp[320];
     FILE *fRepertoire, *fReponses;
+    //COORDONNEES *UnePersonne;
+    //COORDONNEES *Pleindepersonnes;
+    //Pleindepersonnes=(COORDONNEES *) malloc (100*sizeof(COORDONNEES));
+    REPONSE *reponse = (REPONSE *)calloc(1, sizeof(REPONSE));
+    InitReponse(reponse, 1);
+    AfficherMotCle(reponse);
+    fReponses = fopen("testreponse.dat", "w");
+    SauverMotCle(reponse, fReponses);
+    fclose(fReponses);
+    fReponses = fopen("testreponse.dat", "r");
+    ListeReponse(fReponses);
+    fclose(fReponses);
+    return 1;
+    //REPONSE Recup[255];
+/*
     fRepertoire = fopen("Repertoire.dat", "a+");
-    fReponses = fopen("Reponses.dat", "a");
+    fReponses = fopen("Reponses.dat", "a+");//was a
     //printf("size COORDONNEES : %ld", sizeof(COORDONNEES));
     //printf("size UnePersonne : %ld", sizeof(UnePersonne));
     //strcpy(UnePersonne->Nom,"");
@@ -65,18 +76,23 @@ int main(void)
                 switch(choix2)
                 {
                     case 1: //Saisie Coord
-                        printf("Saisie Coordonnes\n");
+                        printf("Saisie Coordonnees\n");
                         SaisieCoordonnees(fRepertoire);//UnePersonne,
                         break;
                     case 2: //Lister Coord
+                        printf("Liste des Coordonnees\n");
                         ListerCoordonnees(fRepertoire);
                         break;
                     case 3: //Rechercher Coord
                         //do
-                        ChargerCoordonnees(Pleindepersonnes, fRepertoire);
+                        //ChargerCoordonnees(Pleindepersonnes, fRepertoire);
                         break;
                     case 4: //Supprimer Coord
                         //do
+                        printf("Suppression des Coordonnees\n\nPersonne a eliminer : ");
+                        scanf("%32s", &Supp);
+                        getchar();
+                        SupprimerLigneCoordonnees(Supp, fRepertoire);
                         break;
                     case 5: //Saisie MotCle
                         SaisieMotCle(reponse, fReponses);
@@ -101,7 +117,7 @@ int main(void)
             /*default:
                 //do
                 break;
-                */
+                
         };
 
     
@@ -125,8 +141,8 @@ int main(void)
     SendCommand(server,"/RELAY3=OFF",5000, debug);
     SendCommand(server,"/RELAY4=ON",5000, debug);
     SendCommand(server,"/RELAY4=OFF",5000, debug);
-    }*/
+    }
     fclose(fRepertoire);
     fclose(fReponses);
-    return 1;
+    return 1;*/
 }

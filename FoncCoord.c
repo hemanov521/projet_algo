@@ -47,8 +47,8 @@ int ListerCoordonnees(FILE *Fichier) // Fonction d'affichage de l'ensemble du r�
 {
     COORDONNEES *Personne;
     Personne = (COORDONNEES *) malloc( sizeof(COORDONNEES) );
-    char *test[640];
-    int offset=0;
+    //char *test[640];
+    //int offset=0;
     if (Fichier == NULL) 
 	{ 
 		fprintf(stderr, "\nERREUR : l'acces au fichier n'a pas fonctionne !\n"); 
@@ -101,3 +101,90 @@ int InitCOORDONNEES(COORDONNEES *C)
     C->Importance=0;
     return 1;
 }
+
+void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier)
+{
+    char *ligne=  (char*) malloc( sizeof(char) );
+    char *buffer =  (char*) malloc( sizeof(char) );
+    buffer="";
+    FILE *copie;    
+    int MAXSIZE = 0xFFF;
+    char proclnk[0xFFF];
+    char filename[0xFFF];
+    int fno;
+    ssize_t r;
+    int i=0;
+
+    if (Fichier != NULL)
+    {
+        fno = fileno(Fichier); // Récupération adresse mémoire du fichier
+        sprintf(proclnk, "/proc/self/fd/%d", fno);
+        r = readlink(proclnk, filename, MAXSIZE); //Récupération adresse absolue dans filename
+        if (r < 0)
+        {
+            printf("failed to readlink\n");
+            exit(1);
+        }
+        filename[r] = '\0';
+        //printf("Fichier -> fno -> filename: %p -> %d -> %s\n", Fichier, fno, filename);
+    }
+
+/*copie = fopen("Tampon", "a+");
+
+if(copie==NULL)
+  {
+    printf("fopen error\n");
+    return;
+  }
+  fseek(copie, 0, SEEK_SET);
+  printf("fprintf : %d\n",fprintf(copie, "DEBUT DU FICHIER\n"));
+  */while(!feof(Fichier))
+  {
+      i++;
+      fscanf(Fichier,"%[^\n]\n",ligne);
+      if(strstr(ligne,MotCle)!=NULL)
+      {
+        //printf("Mot cle '%s' detecte dans la ligne numero %i\n",MotCle,i);
+        printf("Voulez vous supprimer la ligne suivante : \n%s\n\nSi oui tapez 1, sinon tapez 2 : ", ligne);
+        scanf("%d", &fno);
+        getchar();//suppression retour charriot
+        if (fno!=1) 
+        {   printf("taille ligne : %d\n",strlen(ligne));
+            //buffer = (char *) realloc(buffer, strlen(ligne)*sizeof(char));
+            //fputs(ligne, copie);
+            strcat(buffer, ligne);
+            printf("recopie : %s", ligne);
+        }
+      }
+      else{
+      //fprintf(copie,"%s\n",ligne);
+      //fputs(ligne, copie);
+        //buffer = (char *) realloc(buffer, sizeof(ligne));
+        strcat(buffer, ligne);
+      }
+
+  }
+  printf("Buffer : \n %s", buffer);
+  fclose(Fichier);
+  printf("Là 2 ?\n");
+  copie = fopen("Tampon", "a+");
+    if(copie==NULL)
+  {
+    printf("fopen error\n");
+    return;
+  }
+  else
+  {
+  fseek(copie, 0, SEEK_SET);
+  fputs(buffer, copie);
+  fclose(copie);
+
+  }
+  printf("Là 3 ?\n");
+  remove(filename);
+  rename("Tampon",filename);
+  free(ligne);
+  free(buffer);
+  free(copie);
+}
+
