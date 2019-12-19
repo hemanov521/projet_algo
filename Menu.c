@@ -27,24 +27,24 @@ En fichiers binaires :
 int main(void)
 {
     //COORDONNEES *test[1];
-    //int choix, choix2; // déclarations des variables de choix du menu
-    //char *Supp[320];
+    int choix, choix2; // déclarations des variables de choix du menu
+    char *Supp[320];
     FILE *fRepertoire, *fReponses;
     //COORDONNEES *UnePersonne;
     //COORDONNEES *Pleindepersonnes;
     //Pleindepersonnes=(COORDONNEES *) malloc (100*sizeof(COORDONNEES));
     REPONSE *reponse = (REPONSE *)calloc(1, sizeof(REPONSE));
-    InitReponse(reponse, 1);
-    AfficherMotCle(reponse);
-    fReponses = fopen("testreponse.dat", "w");
-    SauverMotCle(reponse, fReponses);
-    fclose(fReponses);
-    fReponses = fopen("testreponse.dat", "r");
-    ListeReponse(fReponses);
-    fclose(fReponses);
-    return 1;
+    //InitReponse(reponse, 1);
+    //AfficherMotCle(reponse);
+    //fReponses = fopen("testreponse.dat", "w");
+    //SauverMotCle(reponse, fReponses);
+    //fclose(fReponses);
+    //fReponses = fopen("testreponse.dat", "r");
+    //ListeReponse(fReponses);
+    //fclose(fReponses);
+    //return 1;
     //REPONSE Recup[255];
-/*
+
     fRepertoire = fopen("Repertoire.dat", "a+");
     fReponses = fopen("Reponses.dat", "a+");//was a
     //printf("size COORDONNEES : %ld", sizeof(COORDONNEES));
@@ -114,7 +114,7 @@ int main(void)
                 printf("case 0");
                 //do
                 break;
-            /*default:
+            default:
                 //do
                 break;
                 
@@ -141,8 +141,8 @@ int main(void)
     SendCommand(server,"/RELAY3=OFF",5000, debug);
     SendCommand(server,"/RELAY4=ON",5000, debug);
     SendCommand(server,"/RELAY4=OFF",5000, debug);
-    }
+    }*/
     fclose(fRepertoire);
     fclose(fReponses);
-    return 1;*/
+    return 1;
 }
