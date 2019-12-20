@@ -16,7 +16,7 @@ int Fact(int N);
 #include <string.h> //String library
 //#include "declaration.h" // declarations du projet
 
-//typedef ssize_t int;
+//typedef int ssize_t;
 
 typedef struct
 {

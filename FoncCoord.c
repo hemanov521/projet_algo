@@ -173,12 +173,12 @@ void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier)//Fonction de suppres
     */
     while(!feof(Fichier))
     {
-        printf("Là !!!\n");
+        //printf("Là !!!\n");
 
         i++;
-        printf("Là !!!\n");
+        //printf("Là !!!\n");
         fscanf(Fichier,"%[^\n]\n",ligne);
-        printf("Là !!!\n");
+        //printf("Là !!!\n");
         if(strstr(ligne,MotCle)!=NULL)
         {
             printf("Là !!!\n");

@@ -14,7 +14,6 @@ int Fact(int N);
 #include <stdlib.h> //Standard Library
 #include <string.h> //String library
 
-
 typedef struct
 {
     char MotCle[32][26]; //32 mots clés de 26 caractères max
@@ -37,6 +36,7 @@ int SupprimerMotCle(char *MotCle, FILE *Fichier);
 //int SupprimerMotCle(REPONSE *Reponse, FILE *Fichier); //Fonction permettant la suppression de Mots clés et de la réponse assocée
 int ChargerMotCle(REPONSE *Reponse, FILE *Fichier);//Fonction permettant la récupération dans un fichier des Mots clés et des réponses
 int RechercheMotCle(REPONSE *MotCleCherche, FILE *Fichier);//Fonction permettant la recherche de Mots clés et de la réponse assocée
+int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse);
 int ListeReponse(FILE *Fichier);
 int InitReponse(REPONSE * Rep, int Number);
 char *charcat(char *premier, char *deuxieme);

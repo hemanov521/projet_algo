@@ -142,7 +142,7 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
     while(word != NULL)
     {
             if (strcmp(word,ListeReponse->MotCle)==0) //Comparation mot a mot // trouvé mot clé
-*/            
+*/  printf("\nRecherche du mot cle '%s'\n", Message->MSG);
     strcpy(Reponse->OBJ,"");
     for(i=0; i<=32; i++)
     {   
@@ -166,7 +166,7 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
 
 int ListeReponse(FILE *Fichier)
 {
-    int i;//,j = 0;
+    int i=0;//,j = 0;
     //char *buffer=(char *)malloc(sizeof(char)*1500);
     //j=sizeof(REPONSE);
     REPONSE *Reponses = (REPONSE *) malloc(sizeof(REPONSE));
@@ -183,6 +183,7 @@ int ListeReponse(FILE *Fichier)
     while(!feof(Fichier))
     {
         if (fread(Reponses, sizeof(REPONSE),1, Fichier)) AfficherMotCle(Reponses);
+        i++;
     }
     //i= fread(Reponses, sizeof(REPONSE),1, Fichier);
     //i= fread(buffer, 1,1342, Fichier);
@@ -331,9 +332,10 @@ int InitReponse(REPONSE * Rep, int Number)
 
 char *int2char(int input)
 {
-    char *buffer;//=(char *)calloc(1, sizeof(char));
+    char *buffer=(char *)calloc(255, sizeof(char));//=(char *)calloc(1, sizeof(char));
     //itoa(input,buffer,10);
     sprintf(buffer, "%d", input);
+    free(buffer);
     return buffer;
 }
 
@@ -355,6 +357,8 @@ int saisirmessage(MESSAGE *monmessage)
         FILE *fptr;
         // opening file in writing mode
         fptr = fopen("log.txt", "a+");
+        int size=0;
+        char Saisie[255];
         // exiting program 
         if (fptr == NULL) {
             printf("Error!");
@@ -362,19 +366,40 @@ int saisirmessage(MESSAGE *monmessage)
         }
 
         printf("Emmetteur : ");
-        fscanf (stdin, "%s", monmessage->EM);
-        fgets(monmessage->EM, sizeof(monmessage->EM), stdin);
+        //fscanf (stdin, "%[^\n]s", monmessage->EM);
+        //fgets(monmessage->EM, sizeof(monmessage->EM), stdin);
+        
+
+        fgets(Saisie,sizeof(Saisie),stdin);
+        size=strcspn(Saisie, "\r\n");
+        strcpy(monmessage->EM,Saisie);
         fprintf(fptr, "%s\n", monmessage->EM);
 
+
+
+
         printf("Objet : ");
-        fscanf (stdin, "%s", monmessage->OBJ);
-        fgets(monmessage->OBJ, sizeof(monmessage->OBJ), stdin);
+        //fscanf (stdin, "%[^\n]s", monmessage->OBJ);
+        //fgets(monmessage->OBJ, sizeof(monmessage->OBJ), stdin);
+        
+        
+        fgets(Saisie,sizeof(Saisie),stdin);
+        size=strcspn(Saisie, "\r\n");
+        strcpy(monmessage->OBJ,Saisie);
         fprintf(fptr, "%s\n", monmessage->OBJ);
 
+        
         printf("Message : ");
-        fscanf (stdin, "%s", monmessage->MSG);
-        fgets(monmessage->MSG, sizeof(monmessage->MSG), stdin);
+//        fscanf (stdin, "%[^\n]s", monmessage->MSG);
+        //fgets(monmessage->MSG, sizeof(monmessage->MSG), stdin);
+ //       fprintf(fptr, "%s\n", monmessage->MSG);
+        fgets(Saisie,sizeof(Saisie),stdin);
+        size=strcspn(Saisie, "\r\n");
+        printf("message : '%s'",saisie);
+        strcpy(monmessage->MSG,Saisie);
         fprintf(fptr, "%s\n", monmessage->MSG);
+
+ 
         fclose(fptr);
 
     return 1;
