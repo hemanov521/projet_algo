@@ -36,7 +36,6 @@ int SaisieMotCle(REPONSE *Reponses, FILE *Fichier) //Fonction permettant la sais
     return 0;
 }
 
-
 int SauverMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la sauvegarde dans un fichier des Mots clés et des réponses
 {
     //FILE *sauvegarde;
@@ -86,8 +85,8 @@ int ChargerMotCle(REPONSE *Reponses, FILE *Fichier)//Fonction permettant la réc
     /*char MotCle[32][26]; //32 mots clés de 26 caractères max
     char Action[255]; // jusqu'a 256 caractères
     char Reponse[255]; // jusqu'a 256 caractères*/
-    fseek(Fichier,0,SEEK_SET); // Curseur au début du fichier
-    i=fread(&Reponses, sizeof(REPONSE),1, Fichier);
+    //fseek(Fichier,0,SEEK_SET); // Curseur au début du fichier
+    i=fread(Reponses, sizeof(REPONSE),1, Fichier);
     printf("%d\n", i);
     /*if(fread(&Reponses, sizeof(REPONSE),1, Fichier) != 0) 
 		printf("Donnees recuperees !\n"); 
@@ -144,6 +143,7 @@ int Recherche(MESSAGE *Message, REPONSE *ListeReponse, MESSAGE *Reponse)
     {
             if (strcmp(word,ListeReponse->MotCle)==0) //Comparation mot a mot // trouvé mot clé
 */            
+    strcpy(Reponse->OBJ,"");
     for(i=0; i<=32; i++)
     {   
             if (strstr(Message->MSG,ListeReponse->MotCle[i]) != NULL) // Trouvé mot clé
@@ -172,18 +172,22 @@ int ListeReponse(FILE *Fichier)
     REPONSE *Reponses = (REPONSE *) malloc(sizeof(REPONSE));
     //printf("\nftell1 : %ld\nSizeof(REPONSE) : %d \nCalcul : %d\n",ftell(Fichier), sizeof(REPONSE), ftell(Fichier)-sizeof(REPONSE)/2);
     //fseek(Fichier, ftell(Fichier), SEEK_SET);
-    fseek(Fichier, 0, SEEK_END);
-    i= fread(Reponses, sizeof(REPONSE),1, Fichier);
-    printf("fread : %d\n",i);    printf("ftell2 : %ld\n",ftell(Fichier));
-    fseek(Fichier, -(sizeof(REPONSE)), SEEK_CUR);
-    printf("ftell3 : %ld\n",ftell(Fichier));
+    //fseek(Fichier, 0, SEEK_END);
+    //i= fread(Reponses, sizeof(REPONSE),1, Fichier);
+    //printf("fread : %d\n",i);    printf("ftell2 : %ld\n",ftell(Fichier));
+    //fseek(Fichier, -(sizeof(REPONSE)), SEEK_CUR);
+    //printf("ftell3 : %ld\n",ftell(Fichier));
     /*fseek(Fichier, ftell(Fichier)-sizeof(REPONSE), SEEK_CUR);//SEEK_CUR semble ne pas fonctionner
     printf("ftell4 : %ld\n",ftell(Fichier));
     */
-    i= fread(Reponses, sizeof(REPONSE),1, Fichier);
+    while(!feof(Fichier))
+    {
+        if (fread(Reponses, sizeof(REPONSE),1, Fichier)) AfficherMotCle(Reponses);
+    }
+    //i= fread(Reponses, sizeof(REPONSE),1, Fichier);
     //i= fread(buffer, 1,1342, Fichier);
-    printf("fread : %d\n",i);
-    AfficherMotCle(Reponses);
+    //printf("fread : %d\n",i);
+    //AfficherMotCle(Reponses);
     //fread(&Reponses, sizeof(REPONSE),1, Fichier);
     //AfficherMotCle(Reponses);
     //fread(&Reponses, sizeof(REPONSE),1, Fichier);
@@ -339,4 +343,42 @@ char *charcat(char *premier, char *deuxieme)
     strcpy(resultat,premier);
     strcat(resultat, deuxieme);
     return resultat;
+}
+
+
+int saisirmessage(MESSAGE *monmessage)
+{
+    //MESSAGE monmessage;
+    while(1)
+    {
+
+        FILE *fptr;
+        // opening file in writing mode
+        fptr = fopen("log.txt", "a+");
+        // exiting program 
+        if (fptr == NULL) {
+            printf("Error!");
+            exit(1);
+        }
+
+        printf("Emmetteur : ");
+        fscanf (stdin, "%s", monmessage->EM);
+        fgets(monmessage->EM, sizeof(monmessage->EM), stdin);
+        fprintf(fptr, "%s\n", monmessage->EM);
+
+        printf("Objet : ");
+        fscanf (stdin, "%s", monmessage->OBJ);
+        fgets(monmessage->OBJ, sizeof(monmessage->OBJ), stdin);
+        fprintf(fptr, "%s\n", monmessage->OBJ);
+
+        printf("Message : ");
+        fscanf (stdin, "%s", monmessage->MSG);
+        fgets(monmessage->MSG, sizeof(monmessage->MSG), stdin);
+        fprintf(fptr, "%s\n", monmessage->MSG);
+        fclose(fptr);
+
+    return 1;
+
+
+    }
 }

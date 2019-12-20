@@ -69,7 +69,7 @@ int ListerCoordonnees(FILE *Fichier) // Fonction d'affichage de l'ensemble du r�
     return 1;
 }
 
-int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier)
+int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier)//fonction qui lit une coordonnée dans le fichier puis la stocke dans une structure COORDONNEES
 //int ChargerCoordonnees(char *Fichier)
 {
     if (Fichier == NULL) 
@@ -84,7 +84,7 @@ int ChargerCoordonnees(COORDONNEES *Personne, FILE *Fichier)
     return 1;
 }
 
-int RechercheCoordonnees(COORDONNEES *Personne, FILE *Fichier, int choix)
+int RechercheCoordonnees(COORDONNEES *Personne, FILE *Fichier, int choix) //Recherche les coordonnées a partir du Nom, Prenom ou Email
 {
     if (Fichier == NULL) 
 	{ 
@@ -93,7 +93,7 @@ int RechercheCoordonnees(COORDONNEES *Personne, FILE *Fichier, int choix)
 	}
     else
     {
-        COORDONNEES *buffer;
+        COORDONNEES *buffer=(COORDONNEES *)calloc(1,sizeof(COORDONNEES));
         fseek(Fichier,0,SEEK_SET);
         printf("\nNous recherchons :\n");
         int trouve=0;
@@ -116,12 +116,13 @@ int RechercheCoordonnees(COORDONNEES *Personne, FILE *Fichier, int choix)
                 return 1;
             }
         }
+        free(buffer);
         printf("\nNous n'avons pas trouve...\n");//si j'ai balayé tout le fichier sans faire le return
     }
     return 1;
 }
 
-int InitCOORDONNEES(COORDONNEES *C)
+int InitCOORDONNEES(COORDONNEES *C) // Fonction qui initialise les champs d'une coordonnée. Remplacée par calloc
 {
     strcpy(C->Nom,"");
     strcpy(C->Prenom,"");
@@ -130,7 +131,7 @@ int InitCOORDONNEES(COORDONNEES *C)
     return 1;
 }
 
-void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier)
+void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier)//Fonction de suppression d'une coordonnée a partir d'un Mot qu'elle contient
 {
     char *ligne=  (char*) malloc( sizeof(char) );
     char *buffer =  (char*) malloc( sizeof(char) );
@@ -157,69 +158,70 @@ void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier)
         filename[r] = '\0';
         //printf("Fichier -> fno -> filename: %p -> %d -> %s\n", Fichier, fno, filename);
     }
-//printf("Là !!!\n");
+    //printf("Là !!!\n");
 
 
-/*copie = fopen("Tampon", "a+");
+    /*copie = fopen("Tampon", "a+");
 
-if(copie==NULL)
-  {
-    printf("fopen error\n");
-    return;
-  }
-  fseek(copie, 0, SEEK_SET);
-  printf("fprintf : %d\n",fprintf(copie, "DEBUT DU FICHIER\n"));
-  */while(!feof(Fichier))
-  {
-printf("Là !!!\n");
-
-      i++;
-printf("Là !!!\n");
-      fscanf(Fichier,"%[^\n]\n",ligne);
-printf("Là !!!\n");
-      if(strstr(ligne,MotCle)!=NULL)
-      {
-printf("Là !!!\n");
-        //printf("Mot cle '%s' detecte dans la ligne numero %i\n",MotCle,i);
-        printf("Voulez vous supprimer la ligne suivante : \n%s\n\nSi oui tapez 1, sinon tapez 2 : ", ligne);
-        scanf("%d", &fno);
-        getchar();//suppression retour charriot
-        if (fno!=1) 
-        {   printf("taille ligne : %ld\n",strlen(ligne));
-            //buffer = (char *) realloc(buffer, strlen(ligne)*sizeof(char));
-            //fputs(ligne, copie);
-            strcat(buffer, ligne);
-            printf("recopie : %s", ligne);
-        }
-      }
-      else{
-      //fprintf(copie,"%s\n",ligne);
-      //fputs(ligne, copie);
-        //buffer = (char *) realloc(buffer, sizeof(ligne));
-        strcat(buffer, ligne);
-      }
-  }
-  printf("Buffer : \n %s", buffer);
-  fclose(Fichier);
-  printf("Là 2 ?\n");
-  copie = fopen("Tampon", "a+");
     if(copie==NULL)
-  {
-    printf("fopen error\n");
-    return;
-  }
-  else
-  {
-  fseek(copie, 0, SEEK_SET);
-  fputs(buffer, copie);
-  fclose(copie);
+    {
+        printf("fopen error\n");
+        return;
+    }
+    fseek(copie, 0, SEEK_SET);
+    printf("fprintf : %d\n",fprintf(copie, "DEBUT DU FICHIER\n"));
+    */
+    while(!feof(Fichier))
+    {
+        printf("Là !!!\n");
 
-  }
-  printf("Là 3 ?\n");
-  remove(filename);
-  rename("Tampon",filename);
-  free(ligne);
-  free(buffer);
-  free(copie);
+        i++;
+        printf("Là !!!\n");
+        fscanf(Fichier,"%[^\n]\n",ligne);
+        printf("Là !!!\n");
+        if(strstr(ligne,MotCle)!=NULL)
+        {
+            printf("Là !!!\n");
+            //printf("Mot cle '%s' detecte dans la ligne numero %i\n",MotCle,i);
+            printf("Voulez vous supprimer la ligne suivante : \n%s\n\nSi oui tapez 1, sinon tapez 2 : ", ligne);
+            scanf("%d", &fno);
+            getchar();//suppression retour charriot
+            if (fno!=1) 
+            {   printf("taille ligne : %ld\n",strlen(ligne));
+                //buffer = (char *) realloc(buffer, strlen(ligne)*sizeof(char));
+                //fputs(ligne, copie);
+                strcat(buffer, ligne);
+                printf("recopie : %s", ligne);
+            }
+        }
+        else
+        {
+        //fprintf(copie,"%s\n",ligne);
+        //fputs(ligne, copie);
+            //buffer = (char *) realloc(buffer, sizeof(ligne));
+            strcat(buffer, ligne);
+        }
+    }
+    printf("Buffer : \n %s", buffer);
+    fclose(Fichier);
+    printf("Là 2 ?\n");
+    copie = fopen("Tampon", "a+");
+    if(copie==NULL)
+    {
+        printf("fopen error\n");
+        return;
+    }
+    else
+    {
+        fseek(copie, 0, SEEK_SET);
+        fputs(buffer, copie);
+        fclose(copie);
+    }
+    printf("Là 3 ?\n");
+    remove(filename);
+    rename("Tampon",filename);
+    free(ligne);
+    free(buffer);
+    free(copie);
 }
 

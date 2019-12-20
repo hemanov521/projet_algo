@@ -87,6 +87,23 @@ int main(void)
             case 1: //utilisateur
                 //do
                 printf("Case 1 : inactive\n");
+                MESSAGE *Recu=(MESSAGE *)calloc(1,sizeof(MESSAGE));
+                MESSAGE *ReponseAEnvoyer=(MESSAGE *)calloc(1,sizeof(MESSAGE));
+                REPONSE *ListeDesReponses=(REPONSE *)calloc(1, sizeof(REPONSE));
+                
+                //memcpy(Recu,saisirmessage(), sizeof(MESSAGE));
+                saisirmessage(Recu);//, sizeof(MESSAGE));
+                strcpy(ReponseAEnvoyer->OBJ,"");
+                while (ReponseAEnvoyer->OBJ=="")
+                    {
+                        ChargerMotCle(ListeDesReponses, fReponses);
+                        Recherche(Recu, ListeDesReponses, ReponseAEnvoyer);
+                    }
+                    printf("\n\nVoici le message a envoyer :\n");
+                    printf("Repondre a : %s\n", ReponseAEnvoyer->EM);
+                    printf("Objet : %s\n", ReponseAEnvoyer->OBJ);
+                    printf("Message : %s\n", ReponseAEnvoyer->MSG);
+
                 break;
             case 2: //Administrateur
                 printf("\t1 - Saisir Coordonnes\n\t2 - Lister Coordonnees\n\t3 - Rechercher coordonnes\n\t4 - Supprimer coordonnee\n\n\t5 - Saisir Mot Cle / reponse\n\t6 - Lister Mot cle / Reponse\n\t7 - Rechercher Mot Cle / Reponse\n\t8 - Supprimer Mot Cle / Reponse\n\n\t9 - Saisie Action Manuelle\n\t0 - Sortie\n\nChoix : ");
@@ -146,6 +163,7 @@ int main(void)
                         SaisieMotCle(reponse, fReponses);
                         break;
                     case 6: //Lister MotCle
+                        fseek(fReponses, 0, SEEK_SET); // je me met au début du fichier
                         ListeReponse(fReponses);
                         break;
                     case 7: //Rechercher MotCle

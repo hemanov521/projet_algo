@@ -16,6 +16,7 @@ int Fact(int N);
 #include <string.h> //String library
 //#include "declaration.h" // declarations du projet
 
+//typedef ssize_t int;
 
 typedef struct
 {
@@ -40,5 +41,7 @@ void SupprimerLigneCoordonnees(char *MotCle, FILE *Fichier); //Fonction permetta
 int InitCOORDONNEES(COORDONNEES *C); //fonction qui initialise les champs vides
 
 char *GetFilename(FILE *Fichier); //Fonction qui retourne l'adresse du fichier à partir de son pointeur
+
+ssize_t readlink(proclnk, filename, MAXSIZE);//fonction système permettant de récupérer l'adresse d'un fichier depuis son pointeur
 
 #endif

@@ -46,4 +46,6 @@ int SaisieMessage(MESSAGE *MessageRecu);
 int GenererReponse(MESSAGE *MessageRecu, MESSAGE *MessageReponse);
 int AfficherReponse(MESSAGE *MessageReponse);
 
+int saisirmessage(MESSAGE *monmessage);
+
 #endif
