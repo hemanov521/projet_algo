@@ -398,10 +398,7 @@ int saisirmessage(MESSAGE *monmessage)
         printf("message : '%s'",saisie);
         strcpy(monmessage->MSG,Saisie);
         fprintf(fptr, "%s\n", monmessage->MSG);
-
- 
         fclose(fptr);
-
     return 1;
 
 
